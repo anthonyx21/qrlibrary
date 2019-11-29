@@ -1,5 +1,5 @@
-import { ConfigService } from '../config/config.service';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigService } from '../config/config.service';
 import { ConfigModule } from '../config/config.module';
 
 export const databaseProviders = [
