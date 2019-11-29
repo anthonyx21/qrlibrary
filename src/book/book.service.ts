@@ -11,25 +11,26 @@ export class BookService {
   constructor(
     @InjectModel('Book')
     private readonly bookModel: Model<Book>,
-  ) { }
+  ) {}
 
   async findOne(id: string): Promise<Book> {
-    return await this.bookModel.findById(id).exec();
+    return this.bookModel.findById(id).exec();
   }
 
   async findAll(): Promise<Book[]> {
-    return await this.bookModel.find().exec();
+    return this.bookModel.find().exec();
   }
 
   async create(createBookDto: CreateBookDto): Promise<Book> {
     const createdBook = new this.bookModel(createBookDto);
-    return await createdBook.save();
+    return createdBook.save();
   }
 
   async checkIn(id: string, checkInDto: CheckInDto): Promise<Book> {
     const book: Book = await this.bookModel.findById(id).exec();
-    if (book.holds.length === 0
-            || (book.holds[book.holds.length - 1].checkedIn !== null)
+    if (
+      book.holds.length === 0
+      || book.holds[book.holds.length - 1].checkedIn !== null
     ) {
       return book;
     }
@@ -43,8 +44,9 @@ export class BookService {
 
   async checkOut(id: string, checkOutDto: CheckOutDto): Promise<Book> {
     const book = await this.bookModel.findById(id).exec();
-    if (book.holds.length > 0
-            && book.holds[book.holds.length - 1].checkedIn == null
+    if (
+      book.holds.length > 0
+      && book.holds[book.holds.length - 1].checkedIn == null
     ) {
       return book;
     }

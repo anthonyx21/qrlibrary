@@ -5,5 +5,7 @@ export const BookSchema = new mongoose.Schema({
   isbn: String,
   title: String,
   description: String,
+  author: String,
+  imageURL: String,
   holds: Array,
 });
