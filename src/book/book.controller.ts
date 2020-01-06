@@ -1,15 +1,13 @@
-import {
-  Controller, Get, Post, Body, Param,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { Book } from './interfaces/book.interface';
 import { CheckInDto } from './dto/check-in-dto';
 import { CheckOutDto } from './dto/check-out-dto';
 
-@Controller('book')
+@Controller('/api/book')
 export class BookController {
-  constructor(private readonly bookService: BookService) { }
+  constructor(private readonly bookService: BookService) {}
 
   @Get()
   findAll(): Promise<Book[]> {
@@ -27,12 +25,20 @@ export class BookController {
   }
 
   @Post('/:id/in')
-  async checkIn(@Param('id') id, @Body() checkInDto: CheckInDto): Promise<Book> {
+  async checkIn(
+    @Param('id') id,
+    @Body() checkInDto: CheckInDto,
+  ): Promise<Book> {
+    console.log('checking in book: ', id);
+    console.log('data:: ', checkInDto);
     return this.bookService.checkIn(id, checkInDto);
   }
 
   @Post('/:id/out')
-  async checkOut(@Param('id') id, @Body() checkOutDto: CheckOutDto): Promise<Book> {
+  async checkOut(
+    @Param('id') id,
+    @Body() checkOutDto: CheckOutDto,
+  ): Promise<Book> {
     return this.bookService.checkOut(id, checkOutDto);
   }
 }
